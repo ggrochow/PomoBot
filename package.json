@@ -1,0 +1,14 @@
+{
+  "name": "pomo",
+  "version": "1.0.0",
+  "description": "Slack Pomodoro timer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^2.0.0"
+  }
+}
