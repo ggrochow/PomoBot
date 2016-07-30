@@ -1,6 +1,6 @@
-var request = require('request');
+import request from 'request';
 
-module.exports = function respond(user, message) {
+export function respond(user, message) {
 
     request({
         url: process.env.INCOMING_WEBHOOK_URL,

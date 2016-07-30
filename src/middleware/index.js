@@ -1,7 +1,7 @@
-const bodyParser = require('body-parser');
-const slackMiddleWare = require('./slack-middleware.js');
+import bodyParser from 'body-parser';
+import slackMiddleWare from './slack-middleware.js';
 
-module.exports = function configureMiddleware(app){
+export default function configureMiddleware(app){
     app.use(bodyParser.json()); // for parsing application/json
     app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 

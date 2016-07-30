@@ -1,13 +1,15 @@
-var respond = require("./slack/webhook-response.js");
-const timer = require("./timer.js");
-module.exports = function slackOutgoingWebhook(req, res) {
+import { respond } from "./incoming-webhook-response.js";
+import { getTimer, deleteTimer, createTimer, getTimeLeft } from "./timer.js";
+
+
+export default function slackOutgoingWebhook(req, res) {
 
     switch (req.command) {
         case "start":
-            pomoStart(req, res);
+            pomoStart(req);
             break;
         case "stop":
-            pomoStop(req, res);
+            pomoStop(req);
             break;
         default:
             //TODO: help text
@@ -18,28 +20,28 @@ module.exports = function slackOutgoingWebhook(req, res) {
     res.status(200).end();
 };
 
-function pomoStart(req, res) {
+function pomoStart(req) {
     var user = req.user;
-    var timer = timer.getTimer(user);
+    var timer = getTimer(user);
     if (!timer) {
         timer = createPomo(user);
     }
-    respond(req.user, "" + timer.getTimeLeft(timer) + "m remaining until you are done with " + timer.type);
+    respond(req.user, "" + getTimeLeft(timer) + "m remaining until you are done with " + timer.type);
 }
 
-function pomoStop(req, res) {
-    timer.deletetimer(req.user);
+function pomoStop(req) {
+    deleteTimer(req.user);
     respond(req.user, "Your timer has been stopped")
 }
 
 function createPomo(user) {
-    return timer.createTimer("Pomodoro", user, 1000*60*30, function(){
+    return createTimer("Pomodoro", user, 1000*60*30, function(){
         pomoEnded(user);
     });
 }
 
 function createBreak(user) {
-    return timer.createTimer("Break", user, 1000*60*5, function(){
+    return createTimer("Break", user, 1000*60*5, function(){
         breakEnded(user);
     });
 }

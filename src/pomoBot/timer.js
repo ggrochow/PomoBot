@@ -8,11 +8,11 @@ const activeTimers = {
 //     }
 };
 
-function getTimer(user) {
+export function getTimer(user) {
     return activeTimers[user.id];
 }
 
-function createTimer(type, user, duration, cb) {
+export function createTimer(type, user, duration, cb) {
     var timer = {
         timer: setTimeout(cb, duration),
         duration: duration,
@@ -24,20 +24,13 @@ function createTimer(type, user, duration, cb) {
     return timer;
 }
 
-function deletetimer(user) {
+export function deleteTimer(user) {
     delete activeTimers[user.id];
 }
 
-function getTimeLeft(timer) {
+export function getTimeLeft(timer) {
     var now = Date.now();
     var ends = timer.ends;
 
     return Math.ceil((ends - now) / (60*1000));
 }
-
-module.exports = {
-    getTimer: getTimer,
-    getTimeLeft: getTimeLeft,
-    deleteTimer: deletetimer,
-    createTimer: createTimer
-};

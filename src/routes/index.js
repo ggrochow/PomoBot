@@ -1,4 +1,6 @@
-module.exports = function configureRoutes(app) {
+import slackOutgoingWebhook from "../pomoBot/outgoing-webhook-resopnse.js"
+
+export default function configureRoutes(app) {
     // Slack Outgoing WebHooks API endpoint.
-    app.post('/', require('./../pomoBot/slack.js'));
+    app.post('/', slackOutgoingWebhook);
 }

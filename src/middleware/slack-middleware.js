@@ -1,6 +1,6 @@
 const TOKEN = process.env.OUTGOING_WEBBOOK_TOKEN;
 
-module.exports = function(req, res, next){
+export default function(req, res, next){
     const body = req.body;
     console.log(body);
     if (body.token != TOKEN) {
