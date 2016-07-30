@@ -1,12 +1,14 @@
 // Run dotenv so we can use .env file, do this before anything
-require('dotenv').config();
+import dotenv from 'dotenv';
+import express from 'express';
+dotenv.config();
 
 import configureRoutes from "./routes";
 import confiureMiddleware from "./middleware";
 
 // Express setup
 const PORT = process.env.PORT || 3000;
-const app = require('express')();
+const app = express();
 confiureMiddleware(app);
 configureRoutes(app);
 
