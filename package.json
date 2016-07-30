@@ -2,10 +2,13 @@
   "name": "pomo",
   "version": "1.0.0",
   "description": "Slack Pomodoro timer",
-  "main": "pomodoro.js",
+  "main": "dist",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "app.js"
+    "dev": "nodemon -w src --exec 'babel-node src --presets es2015,stage-0'",
+    "build": "babel src -s -D -d dist --presets es2015,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint src"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +17,13 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "eslint": "^3.1.1",
+    "nodemon": "^1.9.2"
   }
 }
