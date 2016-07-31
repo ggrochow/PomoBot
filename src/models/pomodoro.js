@@ -1,13 +1,31 @@
-import { create } from './../postgres.js';
+import { create, get } from './../postgres.js';
 
-export default function Pomodoro(pomo) {
-    this.id = pomo.id;
-    this.slackUserId = pomo.slackUserId;
-    this.startTime = pomo.startTime;
-    this.endTime = pomo.endTime;
-    this.duration = pomo.duration;
-    this.finished = pomo.finished;
-    this.notes = pomo.notes;
+function Pomodoro(pomo) {
+    const columnNames = Pomodoro._columnNames;
+    for (const i in columnNames) {
+        const columnName = columnNames[i];
+        this[columnName] = pomo[columnName];
+    }
 }
+Pomodoro._columnNames = ['id', 'slackUserId', 'startTime', 'endTime', 'duration', 'finished', 'notes'];
+Pomodoro._tableName = "pomodoros";
 
-export const createPomodoro = create("pomodoros", Pomodoro);
+export default Pomodoro;
+export const createPomodoro = create(Pomodoro);
+export const getPomodoro = get(Pomodoro);
+
+// createPomodoro({
+//     slackUserId: "123",
+//     startTime: new Date(),
+//     endTime: new Date(),
+//     duration: new Date(),
+// }, (err, pomo) => {
+//     if (err) { console.log(err); return;}
+//     console.log(pomo);
+// });
+
+// getPomodoro({
+//     id: "3"
+// }, (err, data) => {
+//     console.log(data, err);
+// });
