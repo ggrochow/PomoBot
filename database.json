@@ -1,0 +1,15 @@
+{
+  "defaultEnv": "pomodoro",
+  "pomodoro": {
+    "driver": "pg",
+    "user": {
+      "ENV": "PG_USER"
+    },
+    "password": {
+      "ENV": "PG_PASSWORD"
+    },
+    "database": {
+      "ENV": "PG_DATABASE"
+    }
+  }
+}

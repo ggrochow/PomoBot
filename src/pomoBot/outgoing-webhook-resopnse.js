@@ -14,7 +14,7 @@ export default function slackOutgoingWebhook(req, res) {
         default:
             //TODO: help text
             //TODO: take this as complete command
-            res.json({text: "Unrecognized command ' "+req.command+" '."});
+            respond(req.user, "Unrecognized command ' "+req.command+" '.");
     }
 
     res.status(200).end();
@@ -54,8 +54,4 @@ function pomoEnded(user) {
 function breakEnded(user) {
     createPomo(user);
     respond(user, "Your pomo has ended, time to work for 30m, go!");
-}
-
-function at(user) {
-    return "<@" + user.id + "|" + user.name + ">: ";
 }
