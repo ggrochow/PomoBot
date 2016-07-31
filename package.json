@@ -5,10 +5,11 @@
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec 'babel-node src'",
-    "build": "db-migrate up && npm install && babel src -s -D -d dist",
+    "build": "babel src -s -D -d dist",
     "start": "node dist",
-    "prestart": "npm run -s build",
-    "test": "eslint src"
+    "prestart": "npm install && npm run -s migrate && npm run -s build",
+    "test": "eslint src",
+    "migrate": "db-migrate up"
   },
   "author": "",
   "license": "ISC",

@@ -10,7 +10,7 @@ const config = {
 };
 const pool = new pg.Pool(config);
 
-export default function query(sql, args) {
+function query(sql, args) {
     pool.connect(function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
