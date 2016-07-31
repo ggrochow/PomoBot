@@ -25,6 +25,8 @@ export function createTimer(type, user, duration, cb) {
 }
 
 export function deleteTimer(user) {
+    let timer = getTimer(user);
+    clearTimeout(timer.timer);
     delete activeTimers[user.id];
 }
 
