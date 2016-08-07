@@ -14,12 +14,13 @@ export function getTimer(user) {
 
 export function createTimer(type, user, duration, cb) {
     var timer = {
+        type,
         timer: setTimeout(cb, duration),
-        duration: duration,
-        started: Date.now(),
-        ends: Date.now() + duration,
-        type: type
+        duration: new Date(duration),
+        started: new Date(),
+        ends: new Date(new Date() + duration),
     };
+
     activeTimers[user.id]=timer;
     return timer;
 }

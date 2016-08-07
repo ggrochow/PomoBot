@@ -23,7 +23,7 @@ function query(sql, args, tableClass, cb) {
                 console.error('error running query');
                 return cb(err);
             }
-            let out = prepareRows(data).map(row => new tableClass(row));
+            let out = prepareRows(data, tableClass);
             return cb(false, out);
         });
     });
@@ -44,23 +44,19 @@ export function get(tableClass) {
     }
 }
 
-function prepareRows(data) {
-    let out =[];
-    let keys = data.fields.map( key => key.name);
-    for (let rowIndex in data.rows) {
-        let row = data.rows[rowIndex];
-        var obj = {};
-
-        for (let keyIndex in keys) {
-            let key = keys[keyIndex];
-            obj[key] = row[key];
-        }
+function prepareRows(data, tableClass) {
+    const out = [];
+    data.rows.forEach(row => {
+        var obj = new tableClass(row);
         out.push(obj);
-    }
+    });
     return out;
 }
 
 // TODO: Add ability to pass an array of fields to select, instead of *
+// TODO: Allow obj to be an array of objects, indicating a where clause
+// TODO: Allow obj values to be an array, which we turn into an IN clause instead of =
+
 function prepareGetQuery(obj, tableClass) {
     const objectKeys = getColumnArray(obj, tableClass);
 

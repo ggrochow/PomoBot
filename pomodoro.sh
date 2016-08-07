@@ -1,4 +1,4 @@
 #!/bin/bash
-npm install #--no-optional
-#npm run -s migrate &&
+npm install
+#npm run migrate
 npm start
