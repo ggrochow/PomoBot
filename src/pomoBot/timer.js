@@ -1,39 +1,72 @@
-const activeTimers = {
-//    userId: {
-//          timer:
-//          timerStarted
-//          timerEnds
-//          duration
-//          type
-//     }
+import dateFormat from "dateformat";
+
+const Timer = {
+    users: {},
+    running: false,
 };
 
-export function getTimer(user) {
-    return activeTimers[user.id];
+export function isTimerActive() {
+    return Timer.running;
 }
 
-export function createTimer(type, user, duration, cb) {
-    var timer = {
+export function isUserActive(user) {
+    return isTimerActive() && Timer.users[user.id];
+}
+
+export function addToTimer(user) {
+    let users = [];
+    if (Array.isArray(user)) {
+        users = user;
+    } else {
+        users = [user];
+    }
+    users.forEach(u => Timer.users[u.id] = u);
+}
+
+export function removeFromTimer(user) {
+    delete Timer.users[user.id];
+    if (getActiveUsers().length === 0) {
+        clearTimer();
+    }
+}
+
+export function getActiveUsers() {
+    return Object.values(Timer.users);
+}
+
+export function getTimerType() {
+    return Timer.type;
+}
+
+function clearTimer() {
+    clearTimeout(Timer.timer);
+    Timer.running = false;
+}
+
+export function createTimer(type, duration, cb) {
+    Object.assign(Timer, {
         type,
         timer: setTimeout(cb, duration),
         duration: new Date(duration),
         started: new Date(),
-        ends: new Date(new Date() + duration),
-    };
+        endTime: new Date(new Date().getTime() + duration),
+    });
+    Timer.running = true;
 
-    activeTimers[user.id]=timer;
-    return timer;
+    return Timer;
 }
 
-export function deleteTimer(user) {
-    let timer = getTimer(user);
-    clearTimeout(timer.timer);
-    delete activeTimers[user.id];
+export function getMinutesLeft() {
+    return Math.ceil(getTimeLeft() / (60 * 1000));
 }
 
-export function getTimeLeft(timer) {
-    var now = Date.now();
-    var ends = timer.ends;
+export function getTimeLeft() {
+    var now = new Date().getTime();
+    var ends = Timer.endTime.getTime();
 
-    return Math.ceil((ends - now) / (60*1000));
+    return ends - now;
+}
+
+export function getFormattedEndtime() {
+    return dateFormat(Timer.endTime, "h:MM TT");
 }
