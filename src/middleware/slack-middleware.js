@@ -9,7 +9,9 @@ export default function(req, res, next){
         return;
     }
 
-    const text = body.text.substring(body.trigger_word.length)
+  const text = body
+    .text
+    .substring(body.trigger_word.length)
         .trim()
         .split(' ');
 

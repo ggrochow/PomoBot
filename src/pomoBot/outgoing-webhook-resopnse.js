@@ -1,16 +1,17 @@
 import {respond} from "./incoming-webhook-response.js";
+import {POMO_TIME_MS, BREAK_TIME_MS} from "./../constants";
 import {
-    removeFromTimer,
-    createTimer,
-    getMinutesLeft,
-    addToTimer,
-    isTimerActive,
-    isUserActive,
-    getTimerType,
-    getActiveUsers,
-    getFormattedEndtime
+  removeFromTimer,
+  createTimer,
+  getMinutesLeft,
+  addToTimer,
+  isTimerActive,
+  isUserActive,
+  getTimerType,
+  getActiveUsers,
+  getFormattedEndtime
 } from "./timer.js";
-import {GRACE_PERIOD, POMO_TIME_MS, BREAK_TIME_MS} from "./../constants";
+
 
 export default function slackOutgoingWebhook(req, res) {
 
@@ -39,14 +40,9 @@ function pomoStart(req) {
     if (!isTimerActive()) {
         createPomo(user);
         respond(req.user, `Pomo Started, ${getMinutesLeft()}m till break.`);
-    } else if (!isUserActive(user) && getMinutesLeft() < GRACE_PERIOD) {
+    } else if (!isUserActive(user)) {
         addToTimer(user);
         respond(req.user, `You've been added to the already running ${getTimerType()} Pomo, ${getMinutesLeft()}m left.`);
-
-    } else if (!isUserActive(user)) {
-        addToNextTimer(user);
-        respond(req.user, `Theres already a ${getTimerType()} Pomo running, and you're over the ${GRACE_PERIOD}m grace period.` +
-            ` I'll add you to the next one in ${getMinutesLeft()}m`)
     } else if (isUserActive(user)) {
         respond(req.user, `You're already on an active ${getTimerType()} Pomo with ${getMinutesLeft()}m, left.`)
     } else {
@@ -65,6 +61,7 @@ function pomoStatus(req) {
         respond(req.user, `${getTimerType()} Pomo active for ${getActiveUsers().map(user => user.name).join(", ")} ${getMinutesLeft()}m remaining. (${getFormattedEndtime()})`)
     }
 }
+
 function createPomo(user) {
     createTimer("Work", POMO_TIME_MS, pomoEnded);
     addToTimer(user)
@@ -86,13 +83,3 @@ function breakEnded() {
     respond(users, `The Break Pomo ended, ${POMO_TIME_MS / (1000 * 60)}m of work, go!`);
     createPomo(users);
 }
-
-export function addToNextTimer(user) {
-    const nextEnd = getMinutesLeft() * (60 * 1000);
-    // TODO: make this cancelable
-    setTimeout(() => {
-        addToTimer(user);
-        respond(user, `You've been added to the ${getTimerType()} Pomo, ${getMinutesLeft()}m left.`);
-    }, nextEnd + 5000)
-}
-

@@ -1,12 +1,12 @@
-import express from 'express';
-
+import express from "express";
 import configureRoutes from "./routes";
-import confiureMiddleware from "./middleware";
+import configureMiddleware from "./middleware";
 
 // Express setup
 const PORT = process.env.PORT || 3000;
 const app = express();
-confiureMiddleware(app);
+
+configureMiddleware(app);
 configureRoutes(app);
 
 app.listen(PORT, function () {

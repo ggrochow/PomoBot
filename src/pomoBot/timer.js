@@ -14,17 +14,20 @@ export function isUserActive(user) {
 }
 
 export function addToTimer(user) {
-    let users = [];
+    let users;
+
     if (Array.isArray(user)) {
         users = user;
     } else {
         users = [user];
     }
+
     users.forEach(u => Timer.users[u.id] = u);
 }
 
 export function removeFromTimer(user) {
     delete Timer.users[user.id];
+
     if (getActiveUsers().length === 0) {
         clearTimer();
     }
@@ -51,8 +54,8 @@ export function createTimer(type, duration, cb) {
         started: new Date(),
         endTime: new Date(new Date().getTime() + duration),
     });
-    Timer.running = true;
 
+    Timer.running = true;
     return Timer;
 }
 
