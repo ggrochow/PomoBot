@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -w src --exec 'babel-node src'",
     "build": "babel src -s -D -d dist",
-    "start": "node dist",
+    "start": "node --harmony dist",
     "prestart": "npm run -s build",
     "test": "eslint src",
     "migrate": "db-migrate up"

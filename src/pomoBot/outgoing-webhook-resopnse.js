@@ -26,9 +26,7 @@ export default function slackOutgoingWebhook(req, res) {
             pomoStatus(req);
             break;
         default:
-            //TODO: help text
-            //TODO: take this as complete command
-            respond(req.user, "Unrecognized command ' " + req.command + " '");
+            sendHelpText(req);
     }
 
     res.status(200).end();
@@ -60,6 +58,16 @@ function pomoStatus(req) {
     if (isTimerActive()) {
         respond(req.user, `${getTimerType()} Pomo active for ${getActiveUsers().map(user => user.name).join(", ")} ${getMinutesLeft()}m remaining. (${getFormattedEndtime()})`)
     }
+}
+
+function sendHelpText(req) {
+    const triggerWord = req.body.trigger_word;
+    let helpText = `Unrecognized command '${triggerWord} ${req.command}'\n`;
+    helpText += 'I only understand the following commands\n';
+    helpText += `\`${triggerWord} start\` - Starts a new pomodoro for you, or adds you to the currently running one.\n`;
+    helpText += `\`${triggerWord} stop\` - Removes you from the currently running pomodoro, stopping it if you're the last one.\n`;
+    helpText += `\`${triggerWord} status\` - Lets you know when the current pomodor ends, and who's on it.\n`;
+    respond(req.user, helpText);
 }
 
 function createPomo(user) {
