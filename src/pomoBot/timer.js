@@ -34,7 +34,7 @@ export function removeFromTimer(user) {
 }
 
 export function getActiveUsers() {
-    return Object.values(Timer.users);
+    return Object.keys(Timer.users).map(userName => Timer.users[userName]);
 }
 
 export function getTimerType() {
