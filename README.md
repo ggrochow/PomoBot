@@ -1,5 +1,5 @@
 # Simple Pomodoro Bot
-
+![Slack Screenshot](http://i.imgur.com/y2z3NPL.png)
 A Very simple approach to a pomodoro timer slack-bot. No external requirements, very little app setup.
 
 It however does have its limitations, The actual timer is held in the apps memory, so any restarts will cause all currently active timers to be lost.
@@ -30,6 +30,6 @@ run this command to copy the example file, and fill out the new-one.
 
 
 ### Running the app
-Make sure to `npm install` first.
+Make sure to `npm install`.
 
 Running `npm start` will build and run the app.
