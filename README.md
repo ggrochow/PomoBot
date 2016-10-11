@@ -19,10 +19,7 @@ Bot name & icon & label can be set to whatever your heart desires.
 
 Keep note of the token generated, you'll need it later.
 
-#### .env
-`cp .env.example .env`
-
-run this command to copy the example file, and fill out the new-one.
+#### Required ENV Vars
 
 `OUTGOING_WEBBOOK_TOKEN` should be set to the token associated with the outgoing web-hook. This is used to verify requests actually came from slack.
 
