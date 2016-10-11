@@ -7,7 +7,7 @@ It however does have its limitations, The actual timer is held in the apps memor
 ### Setup
 
 #### Slack
-You'll need to both an Incoming WebHook and an Outgoing WebHook for this to work. [You can create them here](https://getworkers.slack.com/apps/manage/custom-integrations)
+You'll need to both an Incoming WebHook and an Outgoing WebHook for this to work. [You can create them here](https://my.slack.com/apps/manage/custom-integrations)
 
 ##### Incoming WebHook
 This is how the app actually sends messages into slack, feel free to use any channel, and setup what-ever username / picture you want.
