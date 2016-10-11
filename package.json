@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -w src --exec 'babel-node src'",
     "build": "babel src -s -D -d dist",
-    "start": "node --harmony dist",
+    "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src",
     "migrate": "db-migrate up"
@@ -16,11 +16,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "dateformat": "^1.0.12",
-    "db-migrate": "^0.10.0-beta.15",
-    "db-migrate-pg": "^0.1.10",
-    "dotenv": "^2.0.0",
     "express": "^4.14.0",
-    "pg": "^6.0.3",
     "request": "^2.74.0"
   },
   "devDependencies": {

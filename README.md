@@ -30,7 +30,6 @@ run this command to copy the example file, and fill out the new-one.
 
 
 ### Running the app
-`./pomodoro.sh`
-This script will `npm install` `npm build` and `npm start` the app
+Make sure to `npm install` first.
 
-Alternatively, just running `npm start` will run the app.
+Running `npm start` will build and run the app.
